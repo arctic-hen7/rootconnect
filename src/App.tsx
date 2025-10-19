@@ -201,14 +201,6 @@ export function App() {
         openModal("CREATE_NEW");
     };
 
-    const handleToolbarNewTree = () => {
-        const confirmReset = window.confirm("This will clear the current tree. Continue?");
-        if (!confirmReset) {
-            return;
-        }
-        dispatch({ type: "SET_TREE", payload: cloneTreeData(EMPTY_TREE) });
-    };
-
     const handleToolbarLoadFromFile = async (file: File) => {
         const text = await file.text();
         try {
@@ -548,10 +540,10 @@ ${svgContent}
             prev.map(item =>
                 item.id === treeId
                     ? {
-                          ...item,
-                          name: trimmed,
-                          updatedAt: new Date().toISOString(),
-                      }
+                        ...item,
+                        name: trimmed,
+                        updatedAt: new Date().toISOString(),
+                    }
                     : item,
             ),
         );
@@ -598,7 +590,6 @@ ${svgContent}
                 />
                 <div className="main-panel">
                     <Toolbar
-                        onNewTree={handleToolbarNewTree}
                         onAddPerson={handleToolbarAddPerson}
                         onLoadFromFile={handleToolbarLoadFromFile}
                         onSaveToFile={handleToolbarSaveToFile}

@@ -1,14 +1,13 @@
 import { ChangeEvent, useRef } from "react";
 
 export type ToolbarProps = {
-    onNewTree: () => void;
     onAddPerson: () => void;
     onLoadFromFile: (file: File) => void;
     onSaveToFile: () => void;
     onPrint: () => void;
 };
 
-export const Toolbar = ({ onNewTree, onAddPerson, onLoadFromFile, onSaveToFile, onPrint }: ToolbarProps) => {
+export const Toolbar = ({ onAddPerson, onLoadFromFile, onSaveToFile, onPrint }: ToolbarProps) => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -25,9 +24,6 @@ export const Toolbar = ({ onNewTree, onAddPerson, onLoadFromFile, onSaveToFile, 
 
     return (
         <div className="toolbar">
-            <button type="button" onClick={onNewTree}>
-                New Tree
-            </button>
             <button type="button" onClick={onAddPerson}>
                 Add New Person
             </button>

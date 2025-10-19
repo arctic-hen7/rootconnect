@@ -12,8 +12,12 @@ export type TreeSidebarProps = {
 export const TreeSidebar = ({ trees, activeTreeId, onSelect, onCreate, onRename, onDelete }: TreeSidebarProps) => {
     return (
         <aside className="tree-sidebar">
+            <div className="tree-sidebar-brand">
+                <span className="brand-root">Root</span>
+                <span className="brand-connect">Connect</span>
+            </div>
             <div className="tree-sidebar-header">
-                <h2>Family Trees</h2>
+                <h2>Your Trees</h2>
                 <button type="button" onClick={onCreate}>
                     New Tree
                 </button>

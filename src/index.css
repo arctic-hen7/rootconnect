@@ -2,7 +2,11 @@
     font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     line-height: 1.5;
     color: #1f2d3d;
-    background-color: #eef2f7;
+    --accent: #4e8388;
+    --surface: #f5f7f8;
+    --panel: #ffffff;
+    --muted: #6f7d90;
+    background-color: var(--surface);
 }
 
 *,
@@ -14,7 +18,7 @@
 body {
     margin: 0;
     min-height: 100vh;
-    background: radial-gradient(circle at top, #ffffff, #e3ebf3 60%);
+    background: var(--surface);
 }
 
 #root {
@@ -30,13 +34,26 @@ body {
 }
 
 .tree-sidebar {
-    width: 260px;
-    border-right: 1px solid #d0d7e2;
-    background: rgba(250, 252, 255, 0.95);
+    width: 268px;
+    border-right: 1px solid #d0dee3;
+    background: #f8fbfc;
     display: flex;
     flex-direction: column;
-    padding: 1.25rem 1rem;
-    gap: 1rem;
+    padding: 1.6rem 1.2rem;
+    gap: 1.4rem;
+}
+
+.tree-sidebar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    gap: 0.3rem;
+    align-items: baseline;
+    color: #22303f;
+}
+
+.tree-sidebar-brand .brand-connect {
+    color: var(--accent);
 }
 
 .tree-sidebar-header {
@@ -47,17 +64,23 @@ body {
 
 .tree-sidebar-header h2 {
     margin: 0;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     color: #22303f;
 }
 
 .tree-sidebar-header button {
-    padding: 0.4rem 0.8rem;
+    padding: 0.45rem 0.85rem;
     border-radius: 6px;
-    border: 1px solid #b8c5d6;
-    background: linear-gradient(135deg, #ffffff, #f4f7fb);
+    border: 1px solid rgba(78, 131, 136, 0.35);
+    background: #ffffff;
     font-weight: 600;
+    color: var(--accent);
     cursor: pointer;
+    transition: background 0.2s ease, border 0.2s ease;
+}
+
+.tree-sidebar-header button:hover {
+    background: rgba(78, 131, 136, 0.12);
 }
 
 .tree-sidebar-list {
@@ -66,23 +89,28 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
+    gap: 0.7rem;
     flex: 1;
     overflow-y: auto;
 }
 
 .tree-sidebar-item {
-    border: 1px solid transparent;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(208, 221, 228, 0.9);
+    border-radius: 12px;
+    background: var(--panel);
     display: flex;
     flex-direction: column;
+    padding: 0.25rem;
     transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
+.tree-sidebar-actions {
+    margin-top: 0.5rem;
+}
+
 .tree-sidebar-item.active {
-    border-color: #4c8df5;
-    box-shadow: 0 0 0 1px rgba(76, 141, 245, 0.35);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px rgba(78, 131, 136, 0.35);
 }
 
 .tree-sidebar-select {
@@ -90,7 +118,7 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    padding: 0.7rem 0.8rem 0 0.8rem;
+    padding: 0.75rem 0.9rem 0 0.9rem;
     background: none;
     border: none;
     cursor: pointer;
@@ -104,34 +132,35 @@ body {
 
 .tree-sidebar-select .timestamp {
     font-size: 0.8rem;
-    color: #6f7d90;
+    color: var(--muted);
 }
 
 .tree-sidebar-actions {
     display: flex;
-    gap: 0.5rem;
-    padding: 0 0.8rem 0.7rem 0.8rem;
+    gap: 0.55rem;
+    padding: 0 0.9rem 0.75rem 0.9rem;
 }
 
 .tree-sidebar-actions button {
     flex: 1;
-    padding: 0.35rem 0.6rem;
+    padding: 0.38rem 0.6rem;
     border-radius: 6px;
-    border: 1px solid #c3d0e0;
-    background: #f4f7fb;
+    border: 1px solid rgba(208, 221, 228, 0.9);
+    background: #f3f6f8;
     font-size: 0.85rem;
     cursor: pointer;
+    color: #22303f;
 }
 
 .tree-sidebar-actions button.destructive {
-    color: #bb2d3b;
-    border-color: rgba(187, 45, 59, 0.4);
-    background: rgba(187, 45, 59, 0.08);
+    color: #b8333f;
+    border-color: rgba(184, 51, 63, 0.35);
+    background: rgba(184, 51, 63, 0.08);
 }
 
 .tree-sidebar-list .empty {
     text-align: center;
-    color: #6f7d90;
+    color: var(--muted);
     padding: 2rem 0;
     font-size: 0.9rem;
 }
@@ -147,30 +176,23 @@ body {
     display: flex;
     gap: 1rem;
     padding: 1rem 1.5rem;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--panel);
     border-bottom: 1px solid #d0d7e2;
-    backdrop-filter: blur(8px);
 }
 
 .toolbar button {
     padding: 0.6rem 1.1rem;
     border-radius: 8px;
-    border: 1px solid #b8c5d6;
-    background: linear-gradient(135deg, #ffffff, #f4f7fb);
+    border: 1px solid rgba(78, 131, 136, 0.4);
+    background: #ffffff;
     font-weight: 600;
-    color: #22303f;
+    color: var(--accent);
     cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: background 0.2s ease, border 0.2s ease;
 }
 
 .toolbar button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 12px rgba(44, 62, 80, 0.08);
-}
-
-.toolbar button:active {
-    transform: translateY(0);
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
+    background: rgba(78, 131, 136, 0.12);
 }
 
 .file-input {
@@ -181,7 +203,7 @@ body {
     flex: 1;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(120deg, rgba(236, 242, 248, 0.6), rgba(250, 252, 255, 0.9));
+    background: #eff4f4;
 }
 
 .genealogy-tree-view {
@@ -212,7 +234,7 @@ body {
 
 .person-node {
     position: absolute;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--panel);
     border: 1px solid #c3d0e0;
     border-radius: 12px;
     padding: 0.9rem;
@@ -228,8 +250,8 @@ body {
 }
 
 .person-node-selected {
-    border-color: #4682b4;
-    box-shadow: 0 12px 24px rgba(70, 130, 180, 0.3);
+    border-color: var(--accent);
+    box-shadow: 0 12px 24px rgba(78, 131, 136, 0.25);
 }
 
 .person-node-name {
@@ -249,7 +271,7 @@ body {
 
 .union-node {
     position: absolute;
-    background: #95a5a6;
+    background: #7aa4a8;
     border-radius: 4px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
     transform: rotate(45deg);
@@ -257,8 +279,8 @@ body {
 }
 
 .union-node-selected {
-    background: #4682b4;
-    box-shadow: 0 6px 12px rgba(70, 130, 180, 0.3);
+    background: var(--accent);
+    box-shadow: 0 6px 12px rgba(78, 131, 136, 0.35);
 }
 
 .contextual-action-menu {
@@ -267,7 +289,7 @@ body {
     flex-direction: column;
     gap: 0.5rem;
     padding: 0.75rem;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--panel);
     border: 1px solid #c3d0e0;
     border-radius: 12px;
     box-shadow: 0 12px 24px rgba(52, 73, 94, 0.18);
@@ -286,8 +308,8 @@ body {
 }
 
 .contextual-action-menu button:hover {
-    background: rgba(70, 130, 180, 0.12);
-    border-color: rgba(70, 130, 180, 0.3);
+    background: rgba(78, 131, 136, 0.15);
+    border-color: rgba(78, 131, 136, 0.3);
 }
 
 .contextual-action-menu button.destructive {
@@ -306,7 +328,7 @@ body {
     transform: translate(-50%, -50%);
     padding: 1.5rem 2rem;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.94);
+    background: var(--panel);
     border: 1px solid #d0d7e2;
     box-shadow: 0 18px 36px rgba(52, 73, 94, 0.18);
     font-size: 1.1rem;
@@ -325,7 +347,7 @@ body {
 
 .modal {
     width: min(600px, 92vw);
-    background: #ffffff;
+    background: var(--panel);
     border-radius: 16px;
     padding: 1.5rem;
     box-shadow: 0 24px 48px rgba(15, 23, 42, 0.28);
@@ -392,12 +414,15 @@ body {
 .modal-actions button.secondary {
     margin-right: auto;
     background: #f1f4f9;
+    color: #22303f;
 }
 
-.modal-actions button[type="submit"] {
-    background: linear-gradient(135deg, #4c8df5, #3a77d3);
+.modal-actions button.primary,
+.modal-actions button[type="submit"],
+.parent-selector-actions button.primary {
+    background: var(--accent);
     color: #ffffff;
-    border-color: transparent;
+    border-color: var(--accent);
 }
 
 .modal-actions button[type="button"] {
@@ -418,7 +443,7 @@ body {
 .parent-selector-modal {
     width: min(1200px, 96vw);
     height: min(90vh, 720px);
-    background: #ffffff;
+    background: var(--panel);
     border-radius: 18px;
     display: flex;
     flex-direction: column;
@@ -479,14 +504,15 @@ body {
 .parent-selector-actions button {
     padding: 0.55rem 1.2rem;
     border-radius: 8px;
-    border: 1px solid #b8c5d6;
+    border: 1px solid #c3d0e0;
     font-weight: 600;
     cursor: pointer;
     background: #ecf1f7;
+    color: #22303f;
 }
 
 .parent-selector-actions button.primary {
-    background: linear-gradient(135deg, #4c8df5, #3a77d3);
+    background: var(--accent);
     color: #ffffff;
-    border-color: transparent;
+    border-color: var(--accent);
 }
