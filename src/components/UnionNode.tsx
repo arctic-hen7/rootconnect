@@ -1,4 +1,5 @@
 import { memo, useRef } from "react";
+import { UNION_NODE_SIZE } from "../utils/layout";
 
 export type UnionNodeProps = {
     id: string;
@@ -7,8 +8,6 @@ export type UnionNodeProps = {
     isSelected: boolean;
     onSelect: (unionId: string, anchor: { x: number; y: number }) => void;
 };
-
-export const UNION_NODE_SIZE = 24;
 
 export const UnionNode = memo(({ id, x, y, isSelected, onSelect }: UnionNodeProps) => {
     const ref = useRef<HTMLDivElement | null>(null);

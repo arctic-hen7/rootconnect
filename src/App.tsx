@@ -7,10 +7,11 @@ import { Toolbar } from "./components/Toolbar";
 import { ContextualActionMenu } from "./components/ContextualActionMenu";
 import { UnionActionMenu } from "./components/UnionActionMenu";
 import { PersonEditorModal, PersonEditorMode, PersonEditorSubmitPayload } from "./components/PersonEditorModal";
-import { Person, TreeData } from "./types";
+import { Person } from "./types";
 import { loadTreeData, saveTreeData } from "./utils/indexedDb";
 import { useDebouncedCallback } from "./hooks/useDebouncedCallback";
 import { resolveDefaultPartnerIds, resolveUnionPartners } from "./utils/treeHelpers";
+import { renderTreeToSvg } from "./utils/svgExport";
 import { ParentSelectorModal } from "./components/ParentSelectorModal";
 
 type ModalState = {
@@ -51,7 +52,6 @@ export function App() {
     const [selection, setSelection] = useState<SelectedEntity>(null);
     const [modalState, setModalState] = useState<ModalState | null>(null);
     const [hasLoadedFromStorage, setHasLoadedFromStorage] = useState(false);
-    const [isPrintViewActive, setIsPrintViewActive] = useState(false);
     const [parentSelector, setParentSelector] = useState<{ childId: string } | null>(null);
 
     const debouncedSave = useDebouncedCallback((nextTree: typeof tree) => {
@@ -82,18 +82,6 @@ export function App() {
         }
         debouncedSave(tree);
     }, [tree, hasLoadedFromStorage, debouncedSave]);
-
-    useEffect(() => {
-        const rootNode = document.getElementById("root");
-        if (!rootNode) {
-            return;
-        }
-        if (isPrintViewActive) {
-            rootNode.classList.add("print-view");
-        } else {
-            rootNode.classList.remove("print-view");
-        }
-    }, [isPrintViewActive]);
 
     const treeContextValue = useMemo(
         () => ({
@@ -168,13 +156,48 @@ export function App() {
     };
 
     const handleToolbarPrint = () => {
-        setIsPrintViewActive(true);
-        const handleAfterPrint = () => {
-            setIsPrintViewActive(false);
-            window.removeEventListener("afterprint", handleAfterPrint);
-        };
-        window.addEventListener("afterprint", handleAfterPrint);
-        window.print();
+        const svgContent = renderTreeToSvg(tree);
+        const printerWindow = window.open("", "_blank", "noopener,noreferrer");
+        if (!printerWindow) {
+            const blob = new Blob([svgContent], { type: "image/svg+xml" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "family-tree.svg";
+            link.click();
+            URL.revokeObjectURL(url);
+            return;
+        }
+        const printMarkup = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Genealogy Tree</title>
+    <style>
+        @page { size: landscape; margin: 1cm; }
+        html, body { margin: 0; background: #ffffff; }
+        body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        svg { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+${svgContent}
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            window.focus();
+            window.print();
+        }, 100);
+    };
+    window.onafterprint = function () {
+        window.close();
+    };
+</script>
+</body>
+</html>`;
+        printerWindow.document.open();
+        printerWindow.document.write(printMarkup);
+        printerWindow.document.close();
     };
 
     const selectedPersonId = selection?.type === "person" ? selection.id : null;
@@ -398,7 +421,7 @@ export function App() {
 
     return (
         <TreeProvider value={treeContextValue}>
-            <div className={`app ${isPrintViewActive ? "app-printing" : ""}`}>
+            <div className="app">
                 <Toolbar
                     onNewTree={handleToolbarNewTree}
                     onAddPerson={handleToolbarAddPerson}
