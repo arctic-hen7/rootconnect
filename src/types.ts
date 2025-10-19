@@ -24,6 +24,19 @@ export type TreeData = {
     people: Record<string, Person>;
 };
 
+export type StoredTree = {
+    id: string;
+    name: string;
+    tree: TreeData;
+    updatedAt: string;
+};
+
+export type TreeCollection = {
+    version: 2;
+    trees: StoredTree[];
+    activeTreeId: string | null;
+};
+
 export type TreeAction =
     | { type: "SET_TREE"; payload: TreeData }
     | { type: "UPSERT_PERSON"; payload: Person }

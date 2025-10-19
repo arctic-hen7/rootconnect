@@ -5,12 +5,13 @@ const SVG_MARGIN = 160;
 const NODE_PADDING = 16;
 const FONT_FAMILY = "'Inter', 'Segoe UI', sans-serif";
 
-export const renderTreeToSvg = (tree: TreeData): string => {
+export const renderTreeToSvg = (tree: TreeData, options?: { name?: string }): string => {
     const layout = computeTreeLayout(tree);
     const contentWidth = Math.max(layout.width, 1);
     const contentHeight = Math.max(layout.height, 1);
     const totalWidth = contentWidth + SVG_MARGIN * 2;
     const totalHeight = contentHeight + SVG_MARGIN * 2;
+    const title = options?.name?.trim();
 
     const edgesSvg = layout.edges
         .map(edge => {
@@ -64,6 +65,12 @@ export const renderTreeToSvg = (tree: TreeData): string => {
         })
         .join("\n");
 
+    const titleSvg = title
+        ? `<text x="${totalWidth / 2}" y="${SVG_MARGIN / 2}" font-size="28" font-weight="700" fill="#22303f" text-anchor="middle">${escapeXml(
+              title,
+          )}</text>`
+        : "";
+
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${totalWidth}" height="${totalHeight}" viewBox="0 0 ${totalWidth} ${totalHeight}" preserveAspectRatio="xMidYMid meet">
     <defs>
         <style>
@@ -71,6 +78,7 @@ export const renderTreeToSvg = (tree: TreeData): string => {
         </style>
     </defs>
     <rect x="0" y="0" width="${totalWidth}" height="${totalHeight}" fill="#ffffff" />
+    ${titleSvg}
     <g transform="translate(${SVG_MARGIN} ${SVG_MARGIN})">
         <g stroke-linecap="round" stroke-linejoin="round">
 ${edgesSvg}

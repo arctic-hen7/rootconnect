@@ -24,10 +24,123 @@ body {
 
 .app {
     display: flex;
-    flex-direction: column;
     width: 100%;
     min-height: 100vh;
     color: inherit;
+}
+
+.tree-sidebar {
+    width: 260px;
+    border-right: 1px solid #d0d7e2;
+    background: rgba(250, 252, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1rem;
+    gap: 1rem;
+}
+
+.tree-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tree-sidebar-header h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: #22303f;
+}
+
+.tree-sidebar-header button {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid #b8c5d6;
+    background: linear-gradient(135deg, #ffffff, #f4f7fb);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tree-sidebar-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.tree-sidebar-item {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tree-sidebar-item.active {
+    border-color: #4c8df5;
+    box-shadow: 0 0 0 1px rgba(76, 141, 245, 0.35);
+}
+
+.tree-sidebar-select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.7rem 0.8rem 0 0.8rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.tree-sidebar-select .name {
+    font-weight: 600;
+    color: #22303f;
+}
+
+.tree-sidebar-select .timestamp {
+    font-size: 0.8rem;
+    color: #6f7d90;
+}
+
+.tree-sidebar-actions {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0 0.8rem 0.7rem 0.8rem;
+}
+
+.tree-sidebar-actions button {
+    flex: 1;
+    padding: 0.35rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #c3d0e0;
+    background: #f4f7fb;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.tree-sidebar-actions button.destructive {
+    color: #bb2d3b;
+    border-color: rgba(187, 45, 59, 0.4);
+    background: rgba(187, 45, 59, 0.08);
+}
+
+.tree-sidebar-list .empty {
+    text-align: center;
+    color: #6f7d90;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+}
+
+.main-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
 .toolbar {
@@ -36,9 +149,6 @@ body {
     padding: 1rem 1.5rem;
     background: rgba(255, 255, 255, 0.95);
     border-bottom: 1px solid #d0d7e2;
-    position: sticky;
-    top: 0;
-    z-index: 3;
     backdrop-filter: blur(8px);
 }
 
