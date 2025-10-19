@@ -25,10 +25,18 @@ export const PersonNode = memo(({ person, x, y, width, minHeight, isSelected, on
         if (!element) {
             return;
         }
+        const container = element.closest(".tree-pane") as HTMLElement | null;
         const rect = element.getBoundingClientRect();
+        let x = rect.right + 12;
+        let y = rect.top;
+        if (container) {
+            const containerRect = container.getBoundingClientRect();
+            x = rect.right - containerRect.left + 12;
+            y = rect.top - containerRect.top;
+        }
         onSelect(person.id, {
-            x: rect.right + 16,
-            y: rect.top,
+            x,
+            y,
         });
     };
 

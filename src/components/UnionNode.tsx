@@ -17,10 +17,18 @@ export const UnionNode = memo(({ id, x, y, isSelected, onSelect }: UnionNodeProp
         if (!element) {
             return;
         }
+        const container = element.closest(".tree-pane") as HTMLElement | null;
         const rect = element.getBoundingClientRect();
+        let x = rect.left + rect.width + 8;
+        let y = rect.top - 12;
+        if (container) {
+            const containerRect = container.getBoundingClientRect();
+            x = rect.left - containerRect.left + rect.width + 8;
+            y = rect.top - containerRect.top - 12;
+        }
         onSelect(id, {
-            x: rect.left + rect.width + 12,
-            y: rect.top - 12,
+            x,
+            y,
         });
     };
 
