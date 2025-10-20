@@ -1,0 +1,17 @@
+# This script triggers a build of `arctic-hen7/brewery-source` so we deploy rootconnect to there
+# (it checks out and cross-builds, this triggers that on a push here too)
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'trigger brewery build'
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.BREWERY_DEPLOY_TOKEN }}
+          repository: arctic-hen7/brewery-source
+          event-type: rootconnect_updated
+
